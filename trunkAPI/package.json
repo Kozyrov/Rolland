@@ -1,0 +1,15 @@
+{
+  "name": "trunkapi",
+  "version": "1.0.0",
+  "description": "messenger webhook",
+  "main": "index.js",
+  "scripts": {
+    "test": "tst"
+  },
+  "author": "Steven G. Frankenfield",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
