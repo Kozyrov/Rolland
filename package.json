@@ -1,5 +1,5 @@
 {
-  "name": "trunkapi",
+  "name": "msngrwebhook",
   "version": "1.0.0",
   "description": "messenger webhook",
   "main": "index.js",
@@ -9,7 +9,9 @@
   "author": "Steven G. Frankenfield",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0"
+  },
+  "devDependencies": {
+    "@azure/functions": "^1.2.0"
   }
 }
