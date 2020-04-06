@@ -10,8 +10,5 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0"
-  },
-  "devDependencies": {
-    "@azure/functions": "^1.2.0"
   }
 }
