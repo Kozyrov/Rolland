@@ -1,4 +1,4 @@
-module.exports = async function (context, req) {
+module.exports = async function (context) {
     const {
         req,
         res,
