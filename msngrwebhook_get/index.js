@@ -7,7 +7,7 @@ module.exports = (context) => {
 
     try {
         // Your verify token. Should be a random string.
-        let TRUNK_TOKEN = process.env.TRUNK_TOKEN;
+        let ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 
         // Parse the query params
         let mode = req.query['hub.mode'];
@@ -18,7 +18,7 @@ module.exports = (context) => {
         if (mode && token) {
         
             // Checks the mode and token sent is correct
-            if (mode === 'subscribe' && token === TRUNK_TOKEN) {
+            if (mode === 'subscribe' && token === ACCESS_TOKEN) {
                 
                 // Responds with the challenge token from the request
                 log('WEBHOOK_VERIFIED');
