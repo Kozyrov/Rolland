@@ -10,12 +10,12 @@ module.exports = {
     
             // Create the payload for a basic text message
             payload = {
-            "text": `You sent the message: "${received_message.text}". Now send me an image!`
+                "text": `You sent the message: "${received_message.text}". Now send me an image!`
             }
         } else if (received_message.attachments) {
             let attachment_url = received_message.attachments[0].payload.url;
 
-            response = {
+            payload = {
                 "attachment": {
                     "type": "template",
                     "payload": {

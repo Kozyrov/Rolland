@@ -58,6 +58,7 @@ module.exports = (context) => {
                     await incoming.handlePostback(sender_psid, webhook_event.postback, context);
                 }
             });
+            res.status(200).send('EVENT_RECEIVED');
         } else {
             res.status(404).send();
         }
