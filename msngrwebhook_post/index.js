@@ -49,7 +49,7 @@ handleMessage = (sender_psid, received_message, context) => {
 
     // Sends the response message
     try {
-        module.exports.callSendAPI(sender_psid, payload, context);
+        callSendAPI(sender_psid, payload, context);
     } catch (err) {
         context.res.status(500).send(`Unhandled exception contacting FBMessages API: ${err}`);
     }
