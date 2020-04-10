@@ -53,9 +53,9 @@ module.exports = (context) => {
                 // Check if the event is a message or postback and
                 // pass the event to the appropriate handler function
                 if (webhook_event.message) {
-                    await incoming.handleMessage(sender_psid, webhook_event.message, context);        
+                    await incoming.handleMessage(sender_psid, webhook_event.message);        
                 } else if (webhook_event.postback) {
-                    await incoming.handlePostback(sender_psid, webhook_event.postback, context);
+                    await incoming.handlePostback(sender_psid, webhook_event.postback);
                 }
             });
             res.status(200).send('EVENT_RECEIVED');
