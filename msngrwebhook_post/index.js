@@ -1,7 +1,3 @@
-const {
-  incoming 
-} = require('../services');
-
 module.exports = function (context) {
     const {
         req,
@@ -22,19 +18,68 @@ module.exports = function (context) {
 
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
-            log(`POST fnc - Sender PSID:  ${sender_psid}, webhook event: ${webhook_event}`);
+            log(`POST fnc - Sender PSID:  ${sender_psid}`);
 
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
             if (webhook_event.message) {
-                incoming.handleMessage(sender_psid, webhook_event.message, context);        
+                handleMessage(sender_psid, webhook_event.message, context);        
             } else if (webhook_event.postback) {
-                incoming.handlePostback(sender_psid, webhook_event.postback, context);
+                handlePostback(sender_psid, webhook_event.postback, context);
             }
         });
             
         res.status(200).send('EVENT_RECEIVED');
     } else {
         res.status(404).send();
+    }
+}
+
+handleMessage = (sender_psid, received_message, context) => {
+    let payload;
+
+    // Check if the message contains text
+    if (received_message.text) {    
+
+        // Create the payload for a basic text message
+        payload = {
+        "text": `You sent the message: "${received_message.text}". Now send me an image!`
+        }
+    }  
+
+    // Sends the response message
+    try {
+        module.exports.callSendAPI(sender_psid, payload, context);
+    } catch (err) {
+        context.res.status(500).send(`Unhandled exception contacting FBMessages API: ${err}`);
+    }
+},
+
+// Handles messaging_postbacks events
+handlePostback = (sender_psid, received_postback) => {
+
+},
+
+// Sends response messages via the Send API
+callSendAPI = async (sender_psid, payload, context) => {
+    // Construct the message body
+    let request_body = {
+        "recipient": {
+            "id": sender_psid
+        },
+        "message": payload
+    }
+
+    try {
+        await axios({
+            "method": "post",
+            "url": "https://graph.facebook.com/v2.6/me/messages",
+            "params": { access_token: process.env.PAGE_ACCESS_TOKEN },
+            "data": request_body
+        }).then((res) => {
+            context.log(`message sent!: ${res}`);
+        });
+    } catch (err) {
+        context.error(`Unable to send message: ${err}`); 
     }
 }
