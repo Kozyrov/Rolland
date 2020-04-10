@@ -1,50 +1,53 @@
-const request = require('request');
+const axios = require('axios');
 
 module.exports = {
     // Handles messages events
-    handleMessage: async (sender_psid, received_message) => {
-        let response;
+    handleMessage: (sender_psid, received_message, context) => {
+        let payload;
 
         // Check if the message contains text
         if (received_message.text) {    
 
             // Create the payload for a basic text message
-            response = {
+            payload = {
             "text": `You sent the message: "${received_message.text}". Now send me an image!`
             }
         }  
   
         // Sends the response message
-        callSendAPI(sender_psid, response);
+        try {
+            module.exports.callSendAPI(sender_psid, payload, context);
+        } catch (err) {
+            context.res.status(500).send(`Unhandled exception contacting FBMessages API: ${err}`);
+        }
     },
 
     // Handles messaging_postbacks events
-    handlePostback: async (sender_psid, received_postback) => {
+    handlePostback: (sender_psid, received_postback) => {
 
     },
 
     // Sends response messages via the Send API
-    callSendAPI: async (sender_psid, response) => {
+    callSendAPI: async (sender_psid, payload, context) => {
         // Construct the message body
         let request_body = {
             "recipient": {
-            "id": sender_psid
+                "id": sender_psid
             },
-            "message": response
+            "message": payload
         }
 
-        // Send the HTTP request to the Messenger Platform
-        request({
-            "uri": "https://graph.facebook.com/v2.6/me/messages",
-            "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
-            "method": "POST",
-            "json": request_body
-        }, (err, res, body) => {
-            if (!err) {
-                console.log('message sent!');
-            } else {
-                console.error("Unable to send message:" + err);
-            }
-        }); 
+        try {
+            await axios({
+                "method": "post",
+                "url": "https://graph.facebook.com/v2.6/me/messages",
+                "params": { access_token: process.env.PAGE_ACCESS_TOKEN },
+                "data": request_body
+            }).then((res) => {
+                context.log(`message sent!: ${res}`);
+            });
+        } catch (err) {
+            context.error(`Unable to send message: ${err}`); 
+        }
     }
 }
