@@ -48,7 +48,7 @@ module.exports = {
     },
     
     // Handles messaging_postbacks events
-    handlePostback: (sender_psid, received_postback) => {
+    handlePostback: async (sender_psid, received_postback) => {
         let response;
   
         // Get the payload for the postback
