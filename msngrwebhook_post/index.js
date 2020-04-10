@@ -74,7 +74,7 @@ callSendAPI = async (sender_psid, payload, context) => {
         await axios({
             "method": "post",
             "url": "https://graph.facebook.com/v2.6/me/messages",
-            "params": { access_token: process.env.PAGE_ACCESS_TOKEN },
+            "params": { "access_token": process.env.PAGE_ACCESS_TOKEN },
             "data": request_body
         }).then((res) => {
             context.log(`message sent!: ${res}`);
