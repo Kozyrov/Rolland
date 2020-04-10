@@ -1,7 +1,8 @@
-const
-  incoming = require('../services/incoming');
+const {
+  incoming 
+} = require('../services');
 
-module.exports = async function (context) {
+module.exports = function (context) {
     const {
         req,
         res,
@@ -26,9 +27,9 @@ module.exports = async function (context) {
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
             if (webhook_event.message) {
-                await incoming.handleMessage(sender_psid, webhook_event.message, context);        
+                incoming.handleMessage(sender_psid, webhook_event.message, context);        
             } else if (webhook_event.postback) {
-                await incoming.handlePostback(sender_psid, webhook_event.postback, context);
+                incoming.handlePostback(sender_psid, webhook_event.postback, context);
             }
         });
             
