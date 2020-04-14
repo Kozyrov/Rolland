@@ -48,7 +48,6 @@ module.exports = (context) => {
 
                 // Get the sender PSID
                 let sender_psid = webhook_event.sender.id;
-                log(`POST fnc - Sender PSID:  ${sender_psid}`);
 
                 // Check if the event is a message or postback and
                 // pass the event to the appropriate handler function
