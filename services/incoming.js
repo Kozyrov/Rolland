@@ -16,7 +16,7 @@ module.exports = {
 
             const command_arr = scrub_arr.filter((entry) => entry[0].toLowerCase() === 'd');
 
-            const dice_arr = Object.values(dice).filter((die) => command_arr.includes(die.keyname));
+            const dice_arr = Object.values(dice).filter((die) => command_arr.includes(die.keyname.toLowerCase()));
 
             const results = dice_arr.map((die) => ` ${die.keyname} => ${Math.floor(Math.random() * die.value) + 1}`);
 
