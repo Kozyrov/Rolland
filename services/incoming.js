@@ -10,13 +10,13 @@ module.exports = {
         // Check if the message contains text
         if (received_message.text) {    
             // find any d word in the message
-            const split_arr = received_message.text.split(" ");
+            const split_arr = received_message.text.toLowerCase().split(" ");
 
             const scrub_arr = split_arr.map((entry) => entry.replace(/[^0-9a-z]/gi, ''));
 
             const command_arr = scrub_arr.filter((entry) => entry[0].toLowerCase() === 'd');
 
-            const dice_arr = Object.values(dice).filter((die) => command_arr.includes(die.keyname.toLowerCase()));
+            const dice_arr = Object.values(dice).filter((die) => command_arr.includes(die.keyname));
 
             const results = dice_arr.map((die) => ` ${die.keyname} => ${Math.floor(Math.random() * die.value) + 1}`);
 
