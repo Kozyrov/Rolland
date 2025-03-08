@@ -9,7 +9,7 @@
   "author": "Steven G. Frankenfield",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^1.8.2",
     "body-parser": "^1.19.0"
   }
 }
